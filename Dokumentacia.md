@@ -16,15 +16,15 @@ Vytvoril som obvod kde boli 2 Wi-Fi routre (jeden pre IoT zariadenia (WRT300N) a
   * 1x Smartphone-PT
   * 1x TabletPC-PT
   * 1x PC-PT
-13x IoT zariadenia (vsetky maju zmeneny network adapter na PT-IOT-NM-1W-AC (inak nefungovalo ovladanie cez Server))
-* 4x Light <sub>(Daju sa vypnut/zapnut s 2 urovnami intenzity)</sub>
-* 2x Door <sub>(Daju sa zamknut, interface IoT vypise, ci su otvorene)</sub>
-* 1x GarageDoor <sub>(Da sa otvorit/zavriet)</sub>
-* 1x Fan <sub>(Da sa vypnut/zapnut s 2 rychlostiami)</sub>
-* 1x Lawn Sprinkler <sub>(Da sa vypnut/zapnut)</sub>
-* 1x Thermostat <sub>(Ukazuje nameranu teplotu, selekcia 4 rezimov (Off, Cooling, Heating, Auto), umoznuje nastavit min. teplotu a max. teplotu domacnosti)</sub>
-  * 1x Air Conditioner <sub>(Da sa vypnut/zapnut manualne, alebo vdaka IoT kabloveho prepojenia s termostatom je ovladane aj automaticky)</sub>
-  * 1x Furnace <sub>(Da sa vypnut/zapnut manualne, alebo vdaka IoT kabloveho prepojenia s termostatom je ovladane aj automaticky)</sub>
+* 13x IoT zariadenia (vsetky maju zmeneny network adapter na PT-IOT-NM-1W-AC (inak nefungovalo ovladanie cez Server))
+ * 4x Light <sub>(Daju sa vypnut/zapnut s 2 urovnami intenzity)</sub>
+ * 2x Door <sub>(Daju sa zamknut, interface IoT vypise, ci su otvorene)</sub>
+ * 1x GarageDoor <sub>(Da sa otvorit/zavriet)</sub>
+ * 1x Fan <sub>(Da sa vypnut/zapnut s 2 rychlostiami)</sub>
+ * 1x Lawn Sprinkler <sub>(Da sa vypnut/zapnut)</sub>
+ * 1x Thermostat <sub>(Ukazuje nameranu teplotu, selekcia 4 rezimov (Off, Cooling, Heating, Auto), umoznuje nastavit min. teplotu a max. teplotu domacnosti)</sub>
+   * 1x Air Conditioner <sub>(Da sa vypnut/zapnut manualne, alebo vdaka IoT kabloveho prepojenia s termostatom je ovladane aj automaticky)</sub>
+   * 1x Furnace <sub>(Da sa vypnut/zapnut manualne, alebo vdaka IoT kabloveho prepojenia s termostatom je ovladane aj automaticky)</sub>
 
 ## Postup prace
 ### Elementy
@@ -32,18 +32,17 @@ Najprv som si pridal samotne zariadenia. Vedel som, ze bude potrebny server na R
 ### Kablaz
 Po pridani zariadeni som prepojil Routre a Server cez switch. Viacej som riesit ani nemusel, okrem IoT zariadeni (Thermostat, AC a radiator) neskor, a jedineho PC cez Copper Straight-Through, kedze pouzivatelia a ostatne zariadenia sa budu pripajat bezkablovo.
 ### Setup Servera
-Serveru som najprv nastavil staticku IP adresu, aby sa s nim dalo komunikovat a aby aj IoT zariadenia vedeli ktory to je. Zvolil som si adresu 192.168.0.10, pretoze to je jednoducha adresa na zapamatanie, a zacina este pred DHCP rozsahmi routerov. Napokon som zapol sluzbu AAA, kde som pridal 1 klienta <sub>(Name: SmartHome, IP 192.168.0.1, Key: VerySecureSecret1234)</sub> (Toto sa neskor pouzije pri sifrovani IoT routera). Po zhotoveni Client uctu som urobil User Setup pre vsetky IoT zariadenia. Napokon Som zapol IoT sluzbu, a to je vsetko ohladom servera.
+Serveru som najprv nastavil staticku IP adresu, aby sa s nim dalo komunikovat a aby aj IoT zariadenia vedeli ktory to je. Zvolil som si adresu 192.168.0.10, pretoze to je jednoducha adresa na zapamatanie, a zacina este pred DHCP rozsahmi routerov. Napokon som zapol sluzbu AAA, kde som pridal 1 klienta <sub>(Name: SmartHome, IP 192.168.0.1, Key: VerySecureSecret1234)</sub> (Toto sa neskor pouzije pri sifrovani IoT routera). Po zhotoveni Client uctu som urobil User Setup pre vsetky IoT zariadenia. Napokon som zapol IoT sluzbu, a to je vsetko ohladom servera.
 ### Setup Routerov
 Setupy som robil ciste cez rozhranie GUI.
-* WRT300N -> Nastavil som mu adresu 192.168.0.1 a uistil sa, ze DHCP je zapnute a nemalo by konfliktovat s RADIUS serverovou IP adresou a ani zariadeniami (rozsah je 192.168.0.11-192.168.0.60). Napokon som isiel do Wireless tab-u GUI, kde som mu nastavil SSID TheSmartestOfHomes69 a zaroven ju nastavil ako skrytu. Potom som presiel do sub-tab-u Wireless Security, kde som nastavil sifrovanie na WPA2 Enterprise <sub>(RADIUS Server: IP servera pre RADIUS (192.168.0.10), Shared Secret: Secret Klientskeho uctu RADIUS-a (VerySecureSecret12334))</sub>. Viacej som nemenil.
-* HomeRouter-PT-AC -> V tomto Routeri bolo trocha neprijemnejsie pracovat, kedze tam bolo viac nastaveni a nie vsetky boli jasne. Najprv som mu nechal adresu 192.168.0.1 a zapol som DHCP (zo zaciatku boli problemy... Dost problemov, a vacsina nedavala ani zmysel, ale tie sa podarilo "vyzehlit"). Potom som presiel do okna Wireless, kde som vypol siet 5GHz-2 a nastavil SSID zostavajucich sieti na Home-[frekvencia]. V podpaneli Wireless security som vsetkym sietam nastavil Sifrovanie WPA2 Personal s heslom "welcomehome123". Ine som nechal nezmenene.
+* WRT300N -> Nastavil som mu adresu 192.168.0.1 a uistil sa, ze DHCP je zapnute a nemalo by konfliktovat s RADIUS serverovou IP adresou a ani zariadeniami (rozsah je 192.168.0.11-192.168.0.70). Napokon som isiel do Wireless tab-u GUI, kde som mu nastavil SSID TheSmartestOfHomes69 a zaroven ju nastavil ako skrytu. Potom som presiel do sub-tab-u Wireless Security, kde som nastavil sifrovanie na WPA2 Enterprise <sub>(RADIUS Server: IP servera pre RADIUS (192.168.0.10), Shared Secret: Secret Klientskeho uctu RADIUS-a (VerySecureSecret12334))</sub>. Viacej som nemenil.
+* HomeRouter-PT-AC -> V tomto Routeri bolo trocha neprijemnejsie pracovat, kedze tam bolo viac nastaveni a nie vsetky boli jasne. Najprv som mu nechal adresu 192.168.0.1 a nechal som vypnutu DHCP (tvorilo to iba same problemy, pripojenie to vzdy iba znemoznilo a zariadenia aj bez toho od niekadial beru DHCP adresy). Potom som presiel do okna Wireless, kde som vypol siet 5GHz-2 a nastavil SSID zostavajucich sieti na Home-[frekvencia]. V podpaneli Wireless security som vsetkym sietam nastavil Sifrovanie WPA2 Personal s heslom "welcomehome123". Ine som nechal nezmenene.
 ### Setup pouzivatelskych zariadeni
-Postup pripojenia na Wi-Fi zalezi podla zariadenia. Laptopy a PC staci pripojit cez rozhranie [PC Wireless], zatial co telefony a tabletPC treba nastavit manualne cez [Config]>[Wireless0] (neviem z akej ery tam simuluju telefony, ked uz napr. stare HTC telefony mali na to Android interface...)
-PC-PT nastavovat netreba, kedze sa pripaja priamo do GigabitEthernetu.
-### Registracia IoT pouzivatelskeho uctu (musi byt zhotovena pred setupov IoT zariadeni)
+Postup pripojenia na Wi-Fi zalezi podla zariadenia. Laptopy a PC staci pripojit cez rozhranie [PC Wireless], zatial co telefony a tabletPC treba nastavit manualne cez [Config]>[Wireless0] (neviem z akej ery tam simuluju telefony, ked uz napr. stare HTC telefony mali na to Android interface...). Ethernetove PC-PT nastavovat netreba, kedze sa pripaja priamo do GigabitEthernetu.
+### Registracia IoT pouzivatelskeho uctu (musi byt zhotovena pred setupom IoT zariadeni)
 Otvoril som rozhranie PC-PT, kde som v okne [Desktop] otvoril webovy prehliadac. Cez neho som sa nasledne pripojil na IP adresu IoT servera <sub>(192.168.0.10)</sub>, kde som klikol na Hypertext "Sign up now". To ma zobralo do okna registracie IoT uctu, kde som nastavil User na "Domov" a Pass na "samdoma123". Tieto udaje som si zapisal, pretoze budu pouzite pri vsetkych IoT zariadeniach.
 ### Setup IoT zariadeni
-Postup pripojenia na Wi-Fi bol rovnaky pre vsetky zariadenia. Najprv som si zapol Advanced mod nastaveni, kde som v okne [I/O Config] zmenil network adapter (na PT-IOT-NM-1W-AC) a vo vacsine pripadov vypol Bluetooth. Potom som presiel do okna [Config], a tam pod okna [Wireless0]. Tam som najprv zmenil SSID na siet IoT routera <sub>(TheSmartestOfHomes69)</sub> a potom v [Authentication] som nastavil rezim na WPA2 a nastavil User ID a Password <sub>(Podla Pouzivatelskych uctov v AAA rozhrani RADIUS servera)</sub>. Nakoniec som presiel do okna [Settings], a tam som nastavil IoT Server na rezim Remote Server a nastavil hodnoty podla servera RADIUS <sub>(IP: 192.168.0.10, User: Domov (z IoT sluzby, nedavno tvoreneho uctu), Pass: samdoma123 (tiez z IoT sluzby))</sub> a pripojil ich.
+Postup pripojenia na Wi-Fi bol rovnaky pre vsetky zariadenia. Najprv som si zapol Advanced mod nastaveni, kde som v okne [I/O Config] zmenil network adapter (na PT-IOT-NM-1W-AC) a vo vacsine pripadov vypol Bluetooth. Potom som presiel do okna [Config], a tam podokna [Wireless0]. Tam som najprv zmenil SSID na siet IoT routera <sub>(TheSmartestOfHomes69)</sub> a potom v [Authentication] som nastavil rezim na WPA2 a nastavil User ID a Password <sub>(Podla Pouzivatelskych uctov v AAA rozhrani RADIUS servera)</sub>. Nakoniec som presiel do okna [Settings], a tam som nastavil IoT Server na rezim Remote Server a nastavil hodnoty podla servera RADIUS <sub>(IP: 192.168.0.10, User: Domov (z IoT sluzby, nedavno tvoreneho uctu), Pass: samdoma123 (tiez z IoT sluzby))</sub> a pripojil ich.
 ## Ako sa siet pouziva (pre pouzivatelov)
 Aby dokazal pouzivatel komunikovat so zariadeniami IoT siete, potrebuje byt napojeny na domovsku siet. To moze zrealizovat bud cez Wi-Fi, alebo ethernet. Postup je mierne rozlicny podla zariadenia...(v bode [Setup pouzivatelskych zariadeni])... Potom staci aby si pouzivatel otvoril webovy prehliadac a napojil sa na adresu [192.168.0.10]. Tam sa prihlasi na vytvoreny IoT ucet, alebo moze zaregistrovat novy, ale to by mu bolo zbytocne kedze by nan neboli pripojene ziadne IoTcka). Po uspesnom prihlaseni sa otvori pouzivatelske rozhranie, kde pouzivatel vidi vsetky zariadenia aj s nazvami a seriovymi cislami. Odtialto vie rozlicne zariadenia ovladat, v resp. vidiet urcite hodnoty, ak nejake meraju (thermostat...).
 ## Ako sa siet pouziva (pri pridavani noveho IoT zariadenia)
@@ -54,4 +53,6 @@ Podla mna je vyuzitie RADIUS servera celkom dobry napad, kedze to vyzaduje auten
 ## Problemy pri praci
 Praca bohuzial bezproblemova nebola, ale problemy nastastie neboli kriticke a dali sa vyriesit restartovanim a modlenim. Jedine problemy boli bud s automatickou kablazou (zapajala kable do nevhodnych portov, hlavne pri pripajani PC-PT do pouzivatelskeho Routera), alebo s Wi-Fi pripojenim (IoT zariadenia sa jednoducho nechceli propojit a bolo treba restartovat simulaciu) alebo so samotnym pripojenim IoT zariadeni ku RADIUS serveru (v okne [Config] sa jednoducho nechceli pripojit, aj ked boli uspesne pripojene na Router.)
 
-<sub>()</sub>
+
+
+Richard, 2024
